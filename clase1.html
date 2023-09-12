@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Ciencia de Datos para la Comunicación Política</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"acec48632f854e70a2467c71c090a34f","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/xaringanExtra-progressBar/progress-bar.js"></script>
+    <link rel="stylesheet" href="footer-header.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Ciencia de Datos para la Comunicación Política
+]
+.subtitle[
+## Cursos de Formación Profesional
+]
+.author[
+### 
+]
+.institute[
+### Facultad de Ciencias Sociales | Universidad de Buenos Aires (UBA)
+]
+.date[
+### 23/08/2023
+]
+
+---
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;&lt;span&gt;Juan Pablo Ruiz Nicolini | &lt;a href="https://tuqmano.github.io/CienciaDeDatosComPol"&gt;&lt;u&gt;Ciencia de Datos para la Comunicación Política&lt;/u&gt;&lt;/a&gt;&lt;/span&gt;&lt;/div&gt; 
+
+
+
+
+
+
+
+<style>.xe__progress-bar__container {
+  top:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #00a6a9;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
+
+---
+class: inverse, middle
+
+.pull-left[
+
+# J.P. Ruiz Nicolini 
+
+### Politólogo&lt;sup&gt;2&lt;/sup&gt; (UTDT)
+
+
+####`-&gt;` [researchgate.net/juanpabloruiznicolini](https://www.researchgate.net/profile/Juan_Ruiz_Nicolini)
+
+]
+
+.pull-right[
+
+[**_Enchufes, espejos y tijeras: efectos del diseño de las boletas sobre el comportamiento electoral._ (2017)**](https://www.researchgate.net/publication/321277868)
+
+![](https://user-images.githubusercontent.com/12114624/129569878-3a1f6cb6-36cf-4117-8bf6-31982045675c.png)&lt;!-- --&gt;
+
+
+]
+
+
+
+#### Áreas: 
+
+#### estudios electorales | reforma política  | métodos cuantitativos
+
+---
+
+
+.pull-right[
+# @TuQmano
+
+### Cientista de Datos 
+
+####{polAr} `-&gt;`  **`github/politicargentina`**
+]
+
+
+.pull-left[
+
+![](https://github.com/PoliticaArgentina/data_warehouse/raw/master/hex/collage.png)&lt;!-- --&gt;
+
+
+]
+
+---
+class: inverse, middle
+
+
+# Juan Gabriel Juara 
+
+### Sociólogo&lt;sup&gt;2&lt;/sup&gt; (UBA)
+
+### Coordinador del equipo de datos en la Dirección Nacional de Mercados y Estadística - MINTURDEP
+
+
+---
+
+
+class: inverse 
+
+# Historia de R
+
+
+&gt; Más que lenguaje de programación R **_"es un dialecto de un lenguage de programación de los 70s"_** (S - Bell Laboratories: AT&amp;T, Nokia...)&lt;sup&gt;1&lt;/sup&gt;
+.footnote[
+[1] La cita y este repaso se basan en _slides_ de  [Germán Rosati](https://github.com/gefero/fund-prog-r/)
+]
+--
+
+* Creado por **R**oss Ithaka y **R**obert Gentelman (1991 a 1993)
+
+`S -&gt; R`
+
+--
+
+* 2000: 1.0V
+
+--
+
+* 2011: Nace el entorno de desarrollo integrado (IDE) R Studio 
+
+--
+
+* 2020: 4.0V
+
+--
+
+* [*ULTIMO*](https://cran.r-project.org/): _R-4.3.1 - 2023-06-16, Beagle Scouts_
+
+---
+
+# Qué es R?
+
+## LENGUAJE
+
+- Multiplataforma (Win, Mac, Linux)
+
+--
+
+- Desarrollado por estadísticos para estadísticas
+
+--
+
+- Potente herramienta para generar Viz
+
+--
+
+- Funcionalidad de base + paquetes específicos
+
+--
+
+- Gran comunidad de usuaries colaborando
+
+--
+
+- **ES GRATIS! LIBRE! Y ABIERTO!**
+
+
+---
+class: inverse 
+
+# Curso
+
+* La bibliografía está disponible: 
+1. [R4DS](https://es.r4ds.hadley.nz/)
+2. [Tidytext](https://www.tidytextmining.com/)
+3. [Ciencia de Datos para Gente Sociable](https://bitsandbricks.github.io/ciencia_de_datos_gente_sociable/)
+
+--
+
+* Los `scripts` con código, datos a utilizar y otro material extra se compartirá por mail u otros canales. 
+
+
+--
+
+* La evaluación del curso consistirá en la entrega de un informe con un análisis de datos replicando el flujo de trabajo que presentaremos en el taller. 
+
+--
+
+* A lo largo del curso podrán completar ejercicios de práctica y resolveremos las consultas.
+
+---
+
+background-image: url(https://cran.r-project.org/Rlogo.svg)
+background-position: 95% 5%
+background-size: 10%
+
+
+
+## _El motor de la maquina_
+
+&lt;img src="https://rafalab.github.io/dslibro/R/img/R_console.png" width="80%" /&gt;
+
+---
+background-image: url(https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)
+background-position: 95% 5%
+background-size: 10%
+
+
+## _**Tablero de control** (IDE)_
+
+
+&lt;img src="https://arcruz0.github.io/libroadp/00-images/basic-r/rstudio.png" width="95%" /&gt;
+
+---
+class: inverse
+
+## *Mise en place*
+
+
+
+1.  [`R`](https://cran.r-project.org/) - *CRAN (The Comprehensive R Archive Network)*
+
+--
+
+2.  [`RStudio`](https://www.rstudio.com/products/rstudio/) *IDE (Integrated Development Environment)*
+
+---
+
+# ARCHIVOS DE TRABAJO
+
+---
+
+.pull-left[
+## .R
+]
+
+.pull-right[
+## .Rmd
+]
+
+---
+
+.pull-left[
+
+## .R
+
++ Son lo que llamamos script
++ Permiten permiten guardar el código y sus comentarios (sólo código y comentarios)
++ Son el principal archivo a usar
+
+]
+
+.pull-right[
+
+## .Rmd
+
++ Son archivos de rmarkdown: R + Markdown
++ Combinan fragmentos de codigo de R (llamados chunks) con lenguaje de marcado para darle estilo a fragmentos de texto entre otras cosas (todo lo demás que no sea chunk)
++ Permiten generar informes, ppts, sitios web sencillos basados en html
+
+]
+
+---
+
+# Entrando en R
+
+--
+
+En un script .R en general todo lo que no sea un `comentario` será considerado `código`
+
++ Los comentarios comienzan con #
+
+```
+# Esto es un comentario
+
+a &lt;- 2
+b &lt;- 3
+sum(a+b)
+
+```
+--
+
+Vamos a llamar `objetos` a todas las entidades que creamos en R:
+
++ tienen nombres, por ej.: `a`, `b` y `sum` en el ejemplo de arriba
++ podemos _llamarlos_ y recuperar/usar lo que tengan guardado/asignado
++ en general decimos que su información está guardada en la memoria de trabajo 
+
+---
+
+## Objetos
+
+Hay de distintas clases
+
++ Vectores
++ Matrices
++ Dataframes
++ Listas
++ Funciones
+
+---
+
+### Vectores
+
++ Son uno de los objetos más simples
++ Son objetos que pueden contener muchos elementos
++ Pero siempre del mismo tipo
++ Los creamos con la función `c()`
+
+--
+
+#### Tipos básicos de vectores
+
++ Numeric: valores numéricos como reales, enteros, complejos, etc.
++ Character: cadenas de texto, casi cualquier cosa que podamos escribir entre comillas
++ Boolean: valores lógicos, solo hay 2 posibles TRUE o FALSE
++ Fechas: valores con información de fechas o relativa a periodos de tiempo
++ Factores: valores con etiquetas cualitativas ordenadas por niveles
++ Hay muchos más que iremos viendo de a poco
+
+--
+
+#### Coerción
+
+Cuando tratamos de _guardar_ dos tipos de datos diferentes en un vector se produce la coerción hacia el tipo de dato más abarcativo siempre que se pueda
+
+Bool &lt; Numeric &lt; Texto
+
+---
+
+#### Fechas
+
+
++ Facilitan operaciones entre eventos: por ej. si una fecha está dentro de un periodo o está a un distancia definida en términos de tiempo
+
++ Facilitan crear gráficos de series de tiempo
+
++ Permiten agrupar datos por periodos y momentos
+
+
+---
+
+#### Factores
+
+
++ Son datos cualitativos un orden definido
+
++ Se componen de 2 partes: etiquetas (labels) y niveles (levels)
+
++ Permiten manipular datos de tipo ordinal
+
++ Son muy útiles para asignar un orden dado a datos cualitativos en gráficos
+
+---
+
+### Matrices
+
++ Son como vectores que pueden tener muchas dimensiones
++ Admiten un solo tipo de dato
++ Están definidas las operaciones matriciales para operar con ellas
+
+---
+
+### Dataframes
+
++ Son estructuras tabulares de datos
++ Cada fila una observación
++ Cada columna una variable o atributo
++ Cada columna puede ser de un tipo de dato diferente
++ Son la estructura de dato más usual
+
+---
+
+### Listas
+
++ Permiten guardar elementos diferentes x ej. cada uno de un tipo diferente
++ Cada elemento puede anidar otros elementos (por ej. listas de listas)
++ Admiten indices de nombres y numericos
++ Se usan para almacenar datos poco estructurados o complejos como json, xlm, info geografica, objetos de ggplot, etc.
++ Se usan mucho en procesos de iteración
+
+---
+
+### Selección de elementos
+
+Vectores, Matrices, Dataframes y Listas: estos objetos permiten que seleccionemos uno o varios de sus elementos usando los indices de posición ya sean numércicos o por nombre
+
+---
+
+## Paquetes
+
+--
+
+En R llamamos paquetes a conjuntos de código que en general traen funciones pero también datos, y la documentación y ejemplos necesarios para aprender a usarlos.
+
+-- 
+
+Los paquetes hay que instalarlos en nuestra compu antes de poder usarlos. Se instalan con una función, por ejemplo para instalar el paquete Tidyverse debemos ejecutar:
+
+```
+install.packages('tidyverse')
+
+```
+
+Una vez instalado el paquete no es necesario reinstalarlo cada vez que querramos usarlo, pero sí es necesario _cargarlo_ usando la función `library`, por ej.:
+
+```
+library(tidyverse)
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
