@@ -1,0 +1,424 @@
+---
+title: "Ciencia de Datos para la Comunicación Política"
+subtitle: "Cursos de Formación Profesional"
+author: ""
+institute: "Facultad de Ciencias Socciales | Universidad de Buenos Aires (UBA)"
+date: "04/10/2023"
+output:
+  xaringan::moon_reader:
+    css: ["footer-header.css", "styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+---
+
+layout: true
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(collapse = TRUE,
+                      fig.retina = 3,
+                      cache = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+
+```{r xaringan, include=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons", "extra_styles", "scribble", "editable", "broadcast", "webcam"))
+```
+
+```{r extrasXaringan, echo=FALSE}
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE)
+xaringanExtra::use_progress_bar(color = "#00a6a9", location = "top")
+
+options(scipen = 999)
+
+```
+
+
+
+---
+class: inverse, center, middle
+
+# GGPLOT2
+
+---
+
+# Data Viz I 
+
+## La _Gramática de los Gráficos_
+
+
+---
+class: inverse, middle
+
+
+# Garmática de los Gráficos
+
+
+
+>**Un conjunto formal de reglas para la producción de gráficos estadísticos**
+--
+
+> **Se basa en la definición de capas**
+--
+
+**- _Leland Wilkinson_**
+
+--
+ 
+
+* Estadística y Ciencia de Computación  **+**
+
+--
+
+* Experto en Viz (_SPSS, Tableau_) **+**
+
+--
+
+**->**  [_**Grammar of Graphics**_ (1999)](https://www.springer.com/gp/book/9780387245447)    
+
+
+
+---
+
+## `r fontawesome::fa("book")` Referencias (I)
+
+ Tres libros relevantes:
+
+- [`ggplot2`: _**Elegant Graphics for Data Analysis**_](https://ggplot2-book.org/) (**H. Wickham**) es el material principal con definiciones de la aplicación de la _gramática de gráficos_ en `R`. 
+
+--
+
+- [_**Data Visualization: A Practical Introduction**_](https://socviz.co/index.html#preface) (**K. Heley**) disute principios sobre visualización de datos, y consejos práctivos de su aplicación acompañado de código en `R` par reproducirlos. 
+
+--
+
+- En [_**Fundamentals of Data Visualization**_](https://clauswilke.com/dataviz/) (**Claus Wilke**) presentan argumentos y consejos para realizar visualizaciones profesionales que representen correctamente los datos. 
+
+---
+
+## `r fontawesome::fa("book")` Referencias (II)
+
+
+1. _Visualización de Datos (Intro)_, en "[R para Ciencia de Datos](https://es.r4ds.hadley.nz/visualizaci%C3%B3n-de-datos.html#introducci%C3%B3n-1)" (Wickham y Grolemnud).
+
+2. [_ModernDive_](https://moderndive.com/2-viz.html)
+
+3. [(a) Urdinez y Cruz](https://arcruz0.github.io/libroadp/dataviz.html); [(b) Montané](https://martinmontane.github.io/CienciaDeDatosBook/visualizaciones-de-datos-en-r.html); y [(c) Vázquez Brust](https://bitsandbricks.github.io/ciencia_de_datos_gente_sociable/visualizaci%C3%B3n.html). 
+
+
+---
+
+
+# Data Viz
+
+## La **g**ramática de los **g**ráficos en `R` 
+
+#### _Dibujando por capas_ con [`r fontawesome::fa("link")``{ggplot2}`](https://ggplot2.tidyverse.org/index.html)
+
+
+<img src ='https://r.qcbs.ca/workshop03/book-en/images/gglayers.png' width="500">
+
+
+--
+
+**`r fontawesome::fa("youtube")`** [_Plotting Anything with `ggplot2`_](https://www.youtube.com/watch?v=h29g21z0a68) - Thomas Lin Pedersen.
+
+
+---
+
+## La **g**ramática de los **g**ráficos en `R` 
+
+#### _Dibujando por capas_ con [`r fontawesome::fa("link")``{ggplot2}`](https://ggplot2.tidyverse.org/index.html)
+
+
+.pull-left[
+<img src ='https://r.qcbs.ca/workshop03/book-en/images/gglayers.png' width="500">
+]
+
+.pull-right[
+
+**Vamos de abajo hacia arriba con las 3 capas básicas**
+<br>
+1) Data: casi siempre es un dataframe o tibble <br>
+2) Aes: definen la relación entre variables del dataframe y elementos gráficos <br>
+3) Geoms: definen qué tipo de geometrías usar para representar las `Aes` (puntos, lineas, texto, barras, etc.)
+]
+
+
+---
+
+class: middle, inverse
+
+# Data Viz
+```{r include=FALSE}
+library(tidyverse)
+library(datos)
+```
+
+```{r}
+millas %>% head() %>% gt::gt()
+```
+
+
+---
+# Data Viz
+
+## RECETA BÁSICA
+
+
+
+```{r,eval=FALSE}
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+
+
+- En `ggplot(data = <DATA>)` definimos la fuente de datos para el gráfico
+- En `aes(<MAPPINGS>)` se define la relación en variables y elemento gráficos
+- En `<GEOM_FUNCTION>` definimos qué tipo de geometría se usará para representar esas relaciones
+
+
+
+```{r,eval=TRUE, echo=TRUE, fig.height=3}
+ggplot(data = millas) + 
+  geom_point(mapping = aes(x = ciudad, y  = autopista))
+
+```
+
+---
+
+## RECETA BÁSICA
+
+- Veamos qué pasa al invertir las relaciones `aes(<MAPPINGS>)` 
+
+
+.pull-left[
+```{r,eval=TRUE, echo=TRUE, fig.height=6}
+ggplot(data = millas) + 
+  geom_point(mapping = aes(x = ciudad, y  = autopista))
+
+```
+]
+.pull-right[
+```{r,eval=TRUE, echo =TRUE, fig.height=6}
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista))
+
+```
+]
+
+---
+
+## RECETA BÁSICA
+
+- Veamos qué pasa al cambiar el `<GEOM_FUNCTION>`
+
+
+```{r,eval=TRUE, echo =TRUE, fig.height=5}
+ggplot(data = millas) + 
+  geom_line(mapping = aes(y = ciudad, x  = autopista))
+
+```
+
+(Se ve raro ya vamos a ver por qué)
+
+
+---
+
+# _mapping_ VS _setting_
+
+###  Los geom además de permitir el mapeo de variables a elementos gráficos nos permiten setear elementos gráficos con valores fijos
+
+```{r,eval=FALSE}
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>), <ELEMENTO_GRAFICO> = <VALOR>)
+```
+
+Por ejemplo tomando el `geom_point` anterior:
+
+
+```{r,eval=TRUE, echo =TRUE, fig.height=4}
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista), colour = "blue")
+
+```
+
+En este caso no estamos estableciendo una relación entre una variable del dataset y un elemento gráfico sino que estamos definiendo el valor del elemento gráfico de forma directa.
+
+---
+# Que pasa acá? 
+
+```{r, fig.height=5}
+ggplot(data = millas) +  
+  geom_point(mapping = aes(x = cilindrada,      
+                           y = autopista, 
+                           colour = "blue")) #<<  
+```
+
+---
+
+
+## Data Viz: _ggplot2_
+
+Cada **_geometry_ tiene parámetros específicos** que pueden ser ajustados dentro de la capa _estética_.  El **color** es uno de ellos. 
+
+--
+
+Muchas `geoms`:
+Objetos geométricos (geoms - determina el tipo de trama)
+- `geom_point()`: gráfico de dispersión
+- `geom_line()`: líneas que conectan puntos según x
+- `geom_path()`: líneas que conectan puntos en secuencia de aparición en el - dataframe
+- `geom_boxplot()`: diagrama de caja y bigotes
+- `geom_bar()`/`geom_col()`: gráficos de barras para el eje x categórico
+- `geom_histogram()`: histograma para el eje x continuo
+- `geom_smooth()`: regresiones lineales
+- `geom_text()`: etiquetas de texto dentro del gráfico
+
+Cada una con muchas `aes` posibles
+
+- **x**, **y**: variables a lo largo de los ejes x e y
+- **colour**: color de geoms según datos
+- **fill**: el color interior de la geom
+- **group**: a qué grupo pertenece una geom
+- **shape**: la figura utilizada para trazar un punto
+- **linetype**: el tipo de línea utilizada (sólida, discontinua, etc.)
+- **size**: escala de tamaño para una dimensión adicional
+- **alpha**: la transparencia de la geom
+
+---
+# La separación de elementos gráficos en capas permite ir sumandolas
+
+
+```{r,eval=TRUE, echo =TRUE, fig.height= 4 }
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista),
+             colour = "red") +
+  geom_smooth(aes(y = ciudad, x  = autopista))
+
+```
+---
+# También podemos intercalar datasets diferentes
+```{r,eval=TRUE, echo =TRUE, fig.height= 4 }
+
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista ),
+             colour = "red") +
+  geom_smooth(aes(y = ciudad, x  = autopista)) +
+  ggrepel::geom_label_repel(data = filter(millas, autopista > 40), aes(x = autopista, y = ciudad, label = transmision), size =3)
+  
+
+```
+
+*`ggrepel` es un gran paquete para graficar etiquetas ya que evita superposiciones que tapan otros datos.
+---
+## Cuando repetimos el mismo `aes` en varias capas podemos definirlo directamente dentro de `ggplot()`
+
+```{r,eval=TRUE, echo =TRUE, fig.height= 4 }
+
+ggplot(data = millas, aes(y = ciudad, x  = autopista)) + 
+  geom_point(aes(colour = clase)) +
+  geom_smooth() +
+  ggrepel::geom_label_repel(data = filter(millas, autopista > 40), aes(x = autopista, y = ciudad, label = transmision), size =3)
+  
+
+```
+
+`ggplot` va a reciclar el **aes**  general en las `geom_` siempre que no le indiquemos algún cambio en cada `geom_`
+
+---
+
+
+## Data Viz: _ggplot2_: **_facets_**
+
+`facets` lo que permite que definir una variable de agrupamiento y dividir el gráfico en tanto grupos como tiene la variable de forma de separarlo en pequeños gráficos independientes entre sí
+##### _small multiples_
+
+```{r, out.width= "45%"}
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = ciudad, y = autopista)) +
+  facet_wrap(~ clase, nrow = 2) #<<
+```
+---
+## _Dibujando por capas_: **_scales_**
+
+### las funciones de `scales_()` permiten ajustar las trasformaciones de variables a elementos gráficos que implican las `aes`
+
+Por ej. esto
+
+```{r,eval=TRUE, echo =TRUE, fig.height= 3}
+datos::paises %>% 
+  group_by(anio, continente) %>% 
+  summarise(pob = sum(poblacion, na.rm = T)) %>% 
+  ggplot(aes(x =  anio, y  = pob, colour = continente)) + 
+    geom_point() + geom_line()
+
+```
+
+---
+## _Dibujando por capas_: **_scales_**
+
+### Usando scales pasa a esto otro
+
+```{r,eval=TRUE, echo =TRUE, fig.height= 3}
+datos::paises %>% 
+  group_by(anio, continente) %>% 
+  summarise(pob = sum(poblacion, na.rm = T)) %>% 
+  ggplot(aes(x =  anio, y  = pob, colour = continente)) + 
+    geom_point() + geom_line() +
+    scale_y_log10() + # escala logaritmica para eje y
+    scale_color_viridis_d() # escala de colores viridis
+  
+
+```
+
+---
+
+## _Dibujando por capas_: **_theme_**
+
+- `theme()` y otras funciones análogas permiten ajustar la configuración gráfica de algunas cosas como por ej.: posición de las leyendas, tamaño del texto, tipo de fuente, margenes del grafico entre otras.
+
+- Hay muchos `themes` prefabricados que pueden aprovechar en el paquete `ggthemes`
+
+---
+
+### theme wsj
+
+```{r,  fig.height=4}
+ggplot(millas, aes(cilindrada, autopista)) +
+  geom_point() +
+  geom_point(data = millas %>% 
+               filter(fabricante == "audi"), color = "blue", size =3) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Performance de los AUDI",  subtitle = "Un gráfico con theme WSJ", 
+        y = "Etiqueta Y",  x = "Etiqueta X", 
+        caption = "FUENTE: {datos} 'R Para Ciencia de Datos'") +
+  ggthemes::theme_wsj() #<<
+```
+
+---
+
+### theme tufte
+
+```{r,  fig.height=4}
+ggplot(millas, aes(cilindrada, autopista)) +
+  geom_point() +
+  geom_point(data = millas %>% 
+               filter(fabricante == "audi"), color = "blue", size =3) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Performance de los AUDI",  subtitle = "Un gráfico con theme tufte", 
+        y = "Etiqueta Y",  x = "Etiqueta X", 
+        caption = "FUENTE: {datos} 'R Para Ciencia de Datos'") +
+  ggthemes::theme_tufte() #<<
+```
+
+¿Quién es Tufte?

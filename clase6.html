@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Ciencia de Datos para la Comunicación Política</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="date" content="2023-04-10" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x9e2230578c14cac8c6b722b56e1638e","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/xaringanExtra-progressBar/progress-bar.js"></script>
+    <link rel="stylesheet" href="footer-header.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Ciencia de Datos para la Comunicación Política
+]
+.subtitle[
+## Cursos de Formación Profesional
+]
+.author[
+### 
+]
+.institute[
+### Facultad de Ciencias Socciales | Universidad de Buenos Aires (UBA)
+]
+.date[
+### 04/10/2023
+]
+
+---
+
+
+layout: true
+
+
+
+
+
+
+
+<style>.xe__progress-bar__container {
+  top:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #00a6a9;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
+
+
+
+---
+class: inverse, center, middle
+
+# GGPLOT2
+
+---
+
+# Data Viz I 
+
+## La _Gramática de los Gráficos_
+
+
+---
+class: inverse, middle
+
+
+# Garmática de los Gráficos
+
+
+
+&gt;**Un conjunto formal de reglas para la producción de gráficos estadísticos**
+--
+
+&gt; **Se basa en la definición de capas**
+--
+
+**- _Leland Wilkinson_**
+
+--
+ 
+
+* Estadística y Ciencia de Computación  **+**
+
+--
+
+* Experto en Viz (_SPSS, Tableau_) **+**
+
+--
+
+**-&gt;**  [_**Grammar of Graphics**_ (1999)](https://www.springer.com/gp/book/9780387245447)    
+
+
+
+---
+
+## <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg> Referencias (I)
+
+ Tres libros relevantes:
+
+- [`ggplot2`: _**Elegant Graphics for Data Analysis**_](https://ggplot2-book.org/) (**H. Wickham**) es el material principal con definiciones de la aplicación de la _gramática de gráficos_ en `R`. 
+
+--
+
+- [_**Data Visualization: A Practical Introduction**_](https://socviz.co/index.html#preface) (**K. Heley**) disute principios sobre visualización de datos, y consejos práctivos de su aplicación acompañado de código en `R` par reproducirlos. 
+
+--
+
+- En [_**Fundamentals of Data Visualization**_](https://clauswilke.com/dataviz/) (**Claus Wilke**) presentan argumentos y consejos para realizar visualizaciones profesionales que representen correctamente los datos. 
+
+---
+
+## <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg> Referencias (II)
+
+
+1. _Visualización de Datos (Intro)_, en "[R para Ciencia de Datos](https://es.r4ds.hadley.nz/visualizaci%C3%B3n-de-datos.html#introducci%C3%B3n-1)" (Wickham y Grolemnud).
+
+2. [_ModernDive_](https://moderndive.com/2-viz.html)
+
+3. [(a) Urdinez y Cruz](https://arcruz0.github.io/libroadp/dataviz.html); [(b) Montané](https://martinmontane.github.io/CienciaDeDatosBook/visualizaciones-de-datos-en-r.html); y [(c) Vázquez Brust](https://bitsandbricks.github.io/ciencia_de_datos_gente_sociable/visualizaci%C3%B3n.html). 
+
+
+---
+
+
+# Data Viz
+
+## La **g**ramática de los **g**ráficos en `R` 
+
+#### _Dibujando por capas_ con [<svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>`{ggplot2}`](https://ggplot2.tidyverse.org/index.html)
+
+
+&lt;img src ='https://r.qcbs.ca/workshop03/book-en/images/gglayers.png' width="500"&gt;
+
+
+--
+
+**<svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>** [_Plotting Anything with `ggplot2`_](https://www.youtube.com/watch?v=h29g21z0a68) - Thomas Lin Pedersen.
+
+
+---
+
+## La **g**ramática de los **g**ráficos en `R` 
+
+#### _Dibujando por capas_ con [<svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>`{ggplot2}`](https://ggplot2.tidyverse.org/index.html)
+
+
+.pull-left[
+&lt;img src ='https://r.qcbs.ca/workshop03/book-en/images/gglayers.png' width="500"&gt;
+]
+
+.pull-right[
+
+**Vamos de abajo hacia arriba con las 3 capas básicas**
+&lt;br&gt;
+1) Data: casi siempre es un dataframe o tibble &lt;br&gt;
+2) Aes: definen la relación entre variables del dataframe y elementos gráficos &lt;br&gt;
+3) Geoms: definen qué tipo de geometrías usar para representar las `Aes` (puntos, lineas, texto, barras, etc.)
+]
+
+
+---
+
+class: middle, inverse
+
+# Data Viz
+
+
+
+```r
+millas %&gt;% head() %&gt;% gt::gt()
+```
+
+<div id="igayeozmir" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#igayeozmir table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#igayeozmir thead, #igayeozmir tbody, #igayeozmir tfoot, #igayeozmir tr, #igayeozmir td, #igayeozmir th {
+  border-style: none;
+}
+
+#igayeozmir p {
+  margin: 0;
+  padding: 0;
+}
+
+#igayeozmir .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#igayeozmir .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#igayeozmir .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#igayeozmir .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#igayeozmir .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#igayeozmir .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#igayeozmir .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#igayeozmir .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#igayeozmir .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#igayeozmir .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#igayeozmir .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#igayeozmir .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#igayeozmir .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#igayeozmir .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#igayeozmir .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#igayeozmir .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#igayeozmir .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#igayeozmir .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#igayeozmir .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#igayeozmir .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#igayeozmir .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#igayeozmir .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#igayeozmir .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#igayeozmir .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#igayeozmir .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#igayeozmir .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#igayeozmir .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#igayeozmir .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#igayeozmir .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#igayeozmir .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#igayeozmir .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#igayeozmir .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#igayeozmir .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#igayeozmir .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#igayeozmir .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#igayeozmir .gt_left {
+  text-align: left;
+}
+
+#igayeozmir .gt_center {
+  text-align: center;
+}
+
+#igayeozmir .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#igayeozmir .gt_font_normal {
+  font-weight: normal;
+}
+
+#igayeozmir .gt_font_bold {
+  font-weight: bold;
+}
+
+#igayeozmir .gt_font_italic {
+  font-style: italic;
+}
+
+#igayeozmir .gt_super {
+  font-size: 65%;
+}
+
+#igayeozmir .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#igayeozmir .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#igayeozmir .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#igayeozmir .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#igayeozmir .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#igayeozmir .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#igayeozmir .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="fabricante">fabricante</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="modelo">modelo</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cilindrada">cilindrada</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="anio">anio</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cilindros">cilindros</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="transmision">transmision</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="traccion">traccion</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ciudad">ciudad</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="autopista">autopista</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="combustible">combustible</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="clase">clase</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="fabricante" class="gt_row gt_left">audi</td>
+<td headers="modelo" class="gt_row gt_left">a4</td>
+<td headers="cilindrada" class="gt_row gt_right">1.8</td>
+<td headers="anio" class="gt_row gt_right">1999</td>
+<td headers="cilindros" class="gt_row gt_right">4</td>
+<td headers="transmision" class="gt_row gt_left">auto(l5)</td>
+<td headers="traccion" class="gt_row gt_left">d</td>
+<td headers="ciudad" class="gt_row gt_right">18</td>
+<td headers="autopista" class="gt_row gt_right">29</td>
+<td headers="combustible" class="gt_row gt_left">p</td>
+<td headers="clase" class="gt_row gt_left">compacto</td></tr>
+    <tr><td headers="fabricante" class="gt_row gt_left">audi</td>
+<td headers="modelo" class="gt_row gt_left">a4</td>
+<td headers="cilindrada" class="gt_row gt_right">1.8</td>
+<td headers="anio" class="gt_row gt_right">1999</td>
+<td headers="cilindros" class="gt_row gt_right">4</td>
+<td headers="transmision" class="gt_row gt_left">manual(m5)</td>
+<td headers="traccion" class="gt_row gt_left">d</td>
+<td headers="ciudad" class="gt_row gt_right">21</td>
+<td headers="autopista" class="gt_row gt_right">29</td>
+<td headers="combustible" class="gt_row gt_left">p</td>
+<td headers="clase" class="gt_row gt_left">compacto</td></tr>
+    <tr><td headers="fabricante" class="gt_row gt_left">audi</td>
+<td headers="modelo" class="gt_row gt_left">a4</td>
+<td headers="cilindrada" class="gt_row gt_right">2.0</td>
+<td headers="anio" class="gt_row gt_right">2008</td>
+<td headers="cilindros" class="gt_row gt_right">4</td>
+<td headers="transmision" class="gt_row gt_left">manual(m6)</td>
+<td headers="traccion" class="gt_row gt_left">d</td>
+<td headers="ciudad" class="gt_row gt_right">20</td>
+<td headers="autopista" class="gt_row gt_right">31</td>
+<td headers="combustible" class="gt_row gt_left">p</td>
+<td headers="clase" class="gt_row gt_left">compacto</td></tr>
+    <tr><td headers="fabricante" class="gt_row gt_left">audi</td>
+<td headers="modelo" class="gt_row gt_left">a4</td>
+<td headers="cilindrada" class="gt_row gt_right">2.0</td>
+<td headers="anio" class="gt_row gt_right">2008</td>
+<td headers="cilindros" class="gt_row gt_right">4</td>
+<td headers="transmision" class="gt_row gt_left">auto(av)</td>
+<td headers="traccion" class="gt_row gt_left">d</td>
+<td headers="ciudad" class="gt_row gt_right">21</td>
+<td headers="autopista" class="gt_row gt_right">30</td>
+<td headers="combustible" class="gt_row gt_left">p</td>
+<td headers="clase" class="gt_row gt_left">compacto</td></tr>
+    <tr><td headers="fabricante" class="gt_row gt_left">audi</td>
+<td headers="modelo" class="gt_row gt_left">a4</td>
+<td headers="cilindrada" class="gt_row gt_right">2.8</td>
+<td headers="anio" class="gt_row gt_right">1999</td>
+<td headers="cilindros" class="gt_row gt_right">6</td>
+<td headers="transmision" class="gt_row gt_left">auto(l5)</td>
+<td headers="traccion" class="gt_row gt_left">d</td>
+<td headers="ciudad" class="gt_row gt_right">16</td>
+<td headers="autopista" class="gt_row gt_right">26</td>
+<td headers="combustible" class="gt_row gt_left">p</td>
+<td headers="clase" class="gt_row gt_left">compacto</td></tr>
+    <tr><td headers="fabricante" class="gt_row gt_left">audi</td>
+<td headers="modelo" class="gt_row gt_left">a4</td>
+<td headers="cilindrada" class="gt_row gt_right">2.8</td>
+<td headers="anio" class="gt_row gt_right">1999</td>
+<td headers="cilindros" class="gt_row gt_right">6</td>
+<td headers="transmision" class="gt_row gt_left">manual(m5)</td>
+<td headers="traccion" class="gt_row gt_left">d</td>
+<td headers="ciudad" class="gt_row gt_right">18</td>
+<td headers="autopista" class="gt_row gt_right">26</td>
+<td headers="combustible" class="gt_row gt_left">p</td>
+<td headers="clase" class="gt_row gt_left">compacto</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+
+
+---
+# Data Viz
+
+## RECETA BÁSICA
+
+
+
+
+```r
+ggplot(data = &lt;DATA&gt;) + 
+  &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPINGS&gt;))
+```
+
+
+
+- En `ggplot(data = &lt;DATA&gt;)` definimos la fuente de datos para el gráfico
+- En `aes(&lt;MAPPINGS&gt;)` se define la relación en variables y elemento gráficos
+- En `&lt;GEOM_FUNCTION&gt;` definimos qué tipo de geometría se usará para representar esas relaciones
+
+
+
+
+```r
+ggplot(data = millas) + 
+  geom_point(mapping = aes(x = ciudad, y  = autopista))
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-4-1.png" width="504" /&gt;
+
+---
+
+## RECETA BÁSICA
+
+- Veamos qué pasa al invertir las relaciones `aes(&lt;MAPPINGS&gt;)` 
+
+
+.pull-left[
+
+```r
+ggplot(data = millas) + 
+  geom_point(mapping = aes(x = ciudad, y  = autopista))
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-5-1.png" width="504" /&gt;
+]
+.pull-right[
+
+```r
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista))
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-6-1.png" width="504" /&gt;
+]
+
+---
+
+## RECETA BÁSICA
+
+- Veamos qué pasa al cambiar el `&lt;GEOM_FUNCTION&gt;`
+
+
+
+```r
+ggplot(data = millas) + 
+  geom_line(mapping = aes(y = ciudad, x  = autopista))
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-7-1.png" width="504" /&gt;
+
+(Se ve raro ya vamos a ver por qué)
+
+
+---
+
+# _mapping_ VS _setting_
+
+###  Los geom además de permitir el mapeo de variables a elementos gráficos nos permiten setear elementos gráficos con valores fijos
+
+
+```r
+ggplot(data = &lt;DATA&gt;) + 
+  &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPINGS&gt;), &lt;ELEMENTO_GRAFICO&gt; = &lt;VALOR&gt;)
+```
+
+Por ejemplo tomando el `geom_point` anterior:
+
+
+
+```r
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista), colour = "blue")
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-9-1.png" width="504" /&gt;
+
+En este caso no estamos estableciendo una relación entre una variable del dataset y un elemento gráfico sino que estamos definiendo el valor del elemento gráfico de forma directa.
+
+---
+# Que pasa acá? 
+
+
+```r
+ggplot(data = millas) +  
+  geom_point(mapping = aes(x = cilindrada,      
+                           y = autopista, 
+*                          colour = "blue"))
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-10-1.png" width="504" /&gt;
+
+---
+
+
+## Data Viz: _ggplot2_
+
+Cada **_geometry_ tiene parámetros específicos** que pueden ser ajustados dentro de la capa _estética_.  El **color** es uno de ellos. 
+
+--
+
+Muchas `geoms`:
+Objetos geométricos (geoms - determina el tipo de trama)
+- `geom_point()`: gráfico de dispersión
+- `geom_line()`: líneas que conectan puntos según x
+- `geom_path()`: líneas que conectan puntos en secuencia de aparición en el - dataframe
+- `geom_boxplot()`: diagrama de caja y bigotes
+- `geom_bar()`/`geom_col()`: gráficos de barras para el eje x categórico
+- `geom_histogram()`: histograma para el eje x continuo
+- `geom_smooth()`: regresiones lineales
+- `geom_text()`: etiquetas de texto dentro del gráfico
+
+Cada una con muchas `aes` posibles
+
+- **x**, **y**: variables a lo largo de los ejes x e y
+- **colour**: color de geoms según datos
+- **fill**: el color interior de la geom
+- **group**: a qué grupo pertenece una geom
+- **shape**: la figura utilizada para trazar un punto
+- **linetype**: el tipo de línea utilizada (sólida, discontinua, etc.)
+- **size**: escala de tamaño para una dimensión adicional
+- **alpha**: la transparencia de la geom
+
+---
+# La separación de elementos gráficos en capas permite ir sumandolas
+
+
+
+```r
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista),
+             colour = "red") +
+  geom_smooth(aes(y = ciudad, x  = autopista))
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-11-1.png" width="504" /&gt;
+---
+# También podemos intercalar datasets diferentes
+
+```r
+
+ggplot(data = millas) + 
+  geom_point(mapping = aes(y = ciudad, x  = autopista ),
+             colour = "red") +
+  geom_smooth(aes(y = ciudad, x  = autopista)) +
+  ggrepel::geom_label_repel(data = filter(millas, autopista &gt; 40), aes(x = autopista, y = ciudad, label = transmision), size =3)
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-12-1.png" width="504" /&gt;
+
+*`ggrepel` es un gran paquete para graficar etiquetas ya que evita superposiciones que tapan otros datos.
+---
+## Cuando repetimos el mismo `aes` en varias capas podemos definirlo directamente dentro de `ggplot()`
+
+
+```r
+
+ggplot(data = millas, aes(y = ciudad, x  = autopista)) + 
+  geom_point(aes(colour = clase)) +
+  geom_smooth() +
+  ggrepel::geom_label_repel(data = filter(millas, autopista &gt; 40), aes(x = autopista, y = ciudad, label = transmision), size =3)
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-13-1.png" width="504" /&gt;
+
+`ggplot` va a reciclar el **aes**  general en las `geom_` siempre que no le indiquemos algún cambio en cada `geom_`
+
+---
+
+
+## Data Viz: _ggplot2_: **_facets_**
+
+`facets` lo que permite que definir una variable de agrupamiento y dividir el gráfico en tanto grupos como tiene la variable de forma de separarlo en pequeños gráficos independientes entre sí
+##### _small multiples_
+
+
+```r
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = ciudad, y = autopista)) +
+* facet_wrap(~ clase, nrow = 2)
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-14-1.png" width="45%" /&gt;
+---
+## _Dibujando por capas_: **_scales_**
+
+### las funciones de `scales_()` permiten ajustar las trasformaciones de variables a elementos gráficos que implican las `aes`
+
+Por ej. esto
+
+
+```r
+datos::paises %&gt;% 
+  group_by(anio, continente) %&gt;% 
+  summarise(pob = sum(poblacion, na.rm = T)) %&gt;% 
+  ggplot(aes(x =  anio, y  = pob, colour = continente)) + 
+    geom_point() + geom_line()
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-15-1.png" width="504" /&gt;
+
+---
+## _Dibujando por capas_: **_scales_**
+
+### Usando scales pasa a esto otro
+
+
+```r
+datos::paises %&gt;% 
+  group_by(anio, continente) %&gt;% 
+  summarise(pob = sum(poblacion, na.rm = T)) %&gt;% 
+  ggplot(aes(x =  anio, y  = pob, colour = continente)) + 
+    geom_point() + geom_line() +
+    scale_y_log10() + # escala logaritmica para eje y
+    scale_color_viridis_d() # escala de colores viridis
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-16-1.png" width="504" /&gt;
+
+---
+
+## _Dibujando por capas_: **_theme_**
+
+- `theme()` y otras funciones análogas permiten ajustar la configuración gráfica de algunas cosas como por ej.: posición de las leyendas, tamaño del texto, tipo de fuente, margenes del grafico entre otras.
+
+- Hay muchos `themes` prefabricados que pueden aprovechar en el paquete `ggthemes`
+
+---
+
+### theme wsj
+
+
+```r
+ggplot(millas, aes(cilindrada, autopista)) +
+  geom_point() +
+  geom_point(data = millas %&gt;% 
+               filter(fabricante == "audi"), color = "blue", size =3) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Performance de los AUDI",  subtitle = "Un gráfico con theme WSJ", 
+        y = "Etiqueta Y",  x = "Etiqueta X", 
+        caption = "FUENTE: {datos} 'R Para Ciencia de Datos'") +
+* ggthemes::theme_wsj()
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-17-1.png" width="504" /&gt;
+
+---
+
+### theme tufte
+
+
+```r
+ggplot(millas, aes(cilindrada, autopista)) +
+  geom_point() +
+  geom_point(data = millas %&gt;% 
+               filter(fabricante == "audi"), color = "blue", size =3) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Performance de los AUDI",  subtitle = "Un gráfico con theme tufte", 
+        y = "Etiqueta Y",  x = "Etiqueta X", 
+        caption = "FUENTE: {datos} 'R Para Ciencia de Datos'") +
+* ggthemes::theme_tufte()
+```
+
+&lt;img src="clase6_files/figure-html/unnamed-chunk-18-1.png" width="504" /&gt;
+
+¿Quién es Tufte?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
