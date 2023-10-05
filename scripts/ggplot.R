@@ -1,6 +1,8 @@
 library(tidyverse)
 # install.packages("readxl")
 library(readxl)
+# install.packages("janitor")
+library(janitor)
 
 # vamos a levantar un excel de varias paginas
 
@@ -8,6 +10,7 @@ url <- "https://www.argentina.gob.ar/sites/default/files/trabajoregistrado_2305_
 
 # los excel no se pueden leer directo de la url a diferencia de los csv, json, txt y otros
 # descargar y guardar en archivo local
+dir.create("entrada")
 download.file(url = url, destfile = "entradas/trabajoregistrado.xlsx", mode = "wb")
 
 ruta_excel <- "entradas/trabajoregistrado.xlsx"
@@ -30,7 +33,14 @@ trabajo <- trabajo %>%
 trabajo <- trabajo %>% 
   filter(year(fecha) >= 2018) %>% 
   select(-c(periodo, total)) %>% 
-  pivot_longer(cols = -c(fecha))
+  pivot_longer(cols = c(empleo_asalariado_en_el_sector_privado,
+                        empleo_asalariado_en_el_sector_publico,
+                        empleo_en_casas_particulares,
+                        trabajo_independientes_autonomos,
+                        trabajo_independientes_monotributo,
+                        trabajo_independientes_monotributo_social))
+
+
 
 trabajo_medias <- trabajo %>% 
   mutate(anio = year(fecha)) %>% 
@@ -39,16 +49,22 @@ trabajo_medias <- trabajo %>%
 
 # grafico de serie de tiempo puestos de trabajo por fecha y tipo
 
-trabajo %>% 
-  ggplot() +
-  # geom_algo 
+ggplot(data = trabajo, aes(x = fecha, y = value, colour = name)) +
+  geom_smooth() + geom_point() +
+  theme_classic()
+
+ggplot(data = trabajo, aes(x = fecha, y = value, fill = name)) +
+  geom_col(position = "dodge") +
+  theme_minimal()
 
 
 # mismo graf agregar una serie de tiempo que use los datos de trabajo_media
-trabajo %>% 
-  ggplot() +
-  # geom_algo() +
-  # geom_algo(data= algo, aes(),
-        # linewidth = 1,
-        #linetype = "dashed")
+
+graf_base <- ggplot(data = trabajo, aes(x = fecha, y = value, colour = name)) +
+  geom_smooth() + geom_point() 
+
+graf_base +
+  geom_line(data= trabajo_medias, aes(x = fecha, y = media, group = name),
+        linewidth = 1,
+        linetype = "dashed", color = "black")
 

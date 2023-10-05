@@ -1,6 +1,6 @@
 # intalar si hace falta
 install.packages("tidyverse")
-library(tidyvse)
+library(tidyverse)
 
 # Intro -------------------------------------------------------------------
 
