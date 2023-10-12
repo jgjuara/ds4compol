@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Ciencia de Datos para la Comunicación Política</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="date" content="2023-04-10" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x1a578a7a85640339a9d98ce0e0698c7","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/xaringanExtra-progressBar/progress-bar.js"></script>
+    <link rel="stylesheet" href="footer-header.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Ciencia de Datos para la Comunicación Política
+]
+.subtitle[
+## Cursos de Formación Profesional
+]
+.author[
+### 
+]
+.institute[
+### Facultad de Ciencias Socciales | Universidad de Buenos Aires (UBA)
+]
+.date[
+### 04/10/2023
+]
+
+---
+
+
+layout: true
+
+
+
+
+
+
+
+<style>.xe__progress-bar__container {
+  top:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #00a6a9;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
+
+
+---
+class: inverse, center, middle
+
+# SCRAPING
+
+---
+class: left, top
+
+  Esta presentación está basada en el libro de [Introduction to Web Mining for Social Scientists de Ulrich Matter](https://umatter.github.io/webmining/).
+
+---
+
+class: center
+
+## ¿Qué es web scraping?
+
+![](https://cdn-media-1.freecodecamp.org/images/1*BrUAg3-OqIHkoTz_CRIzTA.png)&lt;!-- --&gt;
+
+---
+
+*Recolección programática de información a partir de fuentes web.*
+
+- **Recolección**: implica en cierto grado la reunión de elementos dispersos.
+
+- **Programática**: Se realiza mediante programas que se ejecutan sistemáticamente para cada elemento.
+
+- **Fuentes Web**: información disponible en una página web (de cualquier tipo).
+
+
+---
+
+¿Por qué usar web scraping?
+
+- Permite automatizar procesos <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:blue;overflow:visible;position:relative;"><path d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z"/></svg>
+
+- Mayor velocidad de recolección <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:green;overflow:visible;position:relative;"><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM288 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM256 416c35.3 0 64-28.7 64-64c0-17.4-6.9-33.1-18.1-44.6L366 161.7c5.3-12.1-.2-26.3-12.3-31.6s-26.3 .2-31.6 12.3L257.9 288c-.6 0-1.3 0-1.9 0c-35.3 0-64 28.7-64 64s28.7 64 64 64zM176 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm352-32a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
+
+- Estandarización del proceso <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:black;overflow:visible;position:relative;"><path d="M.2 468.9C2.7 493.1 23.1 512 48 512l96 0 320 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-48 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-48c0-26.5-21.5-48-48-48L48 0C21.5 0 0 21.5 0 48L0 368l0 96c0 1.7 .1 3.3 .2 4.9z"/></svg>
+
+- Reproductibilidad del proceso (al menos formalmente) <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:purple;overflow:visible;position:relative;"><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
+
+---
+
+## ¿Qué vamos a ver?
+
+Ejemplos de Web scraping desde R:
+
+- Scraping de paginas web estáticas
+
+- Consulta de APIs (no suele considerarse scraping pero es muy útil)
+
+- Selenium desde R
+
+
+---
+
+##Algunas advertencias generales a tener en cuenta:
+
+- 1. No siempre está permitido por el propietario de la web <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:red;overflow:visible;position:relative;"><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg> 
+
+- 2. No siempre conviene en términos de costo beneficio <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:orange;overflow:visible;position:relative;"><path d="M522.1 62.4c16.8-5.6 25.8-23.7 20.2-40.5S518.6-3.9 501.9 1.6l-113 37.7C375 15.8 349.3 0 320 0c-44.2 0-80 35.8-80 80c0 3 .2 5.9 .5 8.8L117.9 129.6c-16.8 5.6-25.8 23.7-20.2 40.5s23.7 25.8 40.5 20.2l135.5-45.2c4.5 3.2 9.3 5.9 14.4 8.2V480c0 17.7 14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V153.3c21-9.2 37.2-27 44.2-49l125.9-42zM439.6 288L512 163.8 584.4 288H439.6zM512 384c62.9 0 115.2-34 126-78.9c2.6-11-1-22.3-6.7-32.1L536.1 109.8c-5-8.6-14.2-13.8-24.1-13.8s-19.1 5.3-24.1 13.8L392.7 273.1c-5.7 9.8-9.3 21.1-6.7 32.1C396.8 350 449.1 384 512 384zM129.2 291.8L201.6 416H56.7l72.4-124.2zM3.2 433.1C14 478 66.3 512 129.2 512s115.2-34 126-78.9c2.6-11-1-22.3-6.7-32.1L153.2 237.8c-5-8.6-14.2-13.8-24.1-13.8s-19.1 5.3-24.1 13.8L9.9 401.1c-5.7 9.8-9.3 21.1-6.7 32.1z"/></svg>
+
+- 3. Conlleva riesgos de ciberseguridad para quien lo realiza <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:yellow;overflow:visible;position:relative;"><path d="M256 0c53 0 96 43 96 96v3.6c0 15.7-12.7 28.4-28.4 28.4H188.4c-15.7 0-28.4-12.7-28.4-28.4V96c0-53 43-96 96-96zM41.4 105.4c12.5-12.5 32.8-12.5 45.3 0l64 64c.7 .7 1.3 1.4 1.9 2.1c14.2-7.3 30.4-11.4 47.5-11.4H312c17.1 0 33.2 4.1 47.5 11.4c.6-.7 1.2-1.4 1.9-2.1l64-64c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-64 64c-.7 .7-1.4 1.3-2.1 1.9c6.2 12 10.1 25.3 11.1 39.5H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H416c0 24.6-5.5 47.8-15.4 68.6c2.2 1.3 4.2 2.9 6 4.8l64 64c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-63.1-63.1c-24.5 21.8-55.8 36.2-90.3 39.6V240c0-8.8-7.2-16-16-16s-16 7.2-16 16V479.2c-34.5-3.4-65.8-17.8-90.3-39.6L86.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l64-64c1.9-1.9 3.9-3.4 6-4.8C101.5 367.8 96 344.6 96 320H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H96.3c1.1-14.1 5-27.5 11.1-39.5c-.7-.6-1.4-1.2-2.1-1.9l-64-64c-12.5-12.5-12.5-32.8 0-45.3z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:yellow;overflow:visible;position:relative;"><path d="M256 0c53 0 96 43 96 96v3.6c0 15.7-12.7 28.4-28.4 28.4H188.4c-15.7 0-28.4-12.7-28.4-28.4V96c0-53 43-96 96-96zM41.4 105.4c12.5-12.5 32.8-12.5 45.3 0l64 64c.7 .7 1.3 1.4 1.9 2.1c14.2-7.3 30.4-11.4 47.5-11.4H312c17.1 0 33.2 4.1 47.5 11.4c.6-.7 1.2-1.4 1.9-2.1l64-64c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-64 64c-.7 .7-1.4 1.3-2.1 1.9c6.2 12 10.1 25.3 11.1 39.5H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H416c0 24.6-5.5 47.8-15.4 68.6c2.2 1.3 4.2 2.9 6 4.8l64 64c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-63.1-63.1c-24.5 21.8-55.8 36.2-90.3 39.6V240c0-8.8-7.2-16-16-16s-16 7.2-16 16V479.2c-34.5-3.4-65.8-17.8-90.3-39.6L86.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l64-64c1.9-1.9 3.9-3.4 6-4.8C101.5 367.8 96 344.6 96 320H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H96.3c1.1-14.1 5-27.5 11.1-39.5c-.7-.6-1.4-1.2-2.1-1.9l-64-64c-12.5-12.5-12.5-32.8 0-45.3z"/></svg>
+
+- 4. Conlleva riesgos para la web scrapeada <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:gray;overflow:visible;position:relative;"><path d="M224 96a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm122.5 32c3.5-10 5.5-20.8 5.5-32c0-53-43-96-96-96s-96 43-96 96c0 11.2 1.9 22 5.5 32H120c-22 0-41.2 15-46.6 36.4l-72 288c-3.6 14.3-.4 29.5 8.7 41.2S33.2 512 48 512H464c14.8 0 28.7-6.8 37.8-18.5s12.3-26.8 8.7-41.2l-72-288C433.2 143 414 128 392 128H346.5z"/></svg> 
+
+
+---
+
+##¿Cómo afrontar esas advertencias?
+
+**CONOCER LO QUE VAMOS A SCRAPEAR**
+1. Chequear TyC o consultar con admins de la web.
+2. Evaluar costos/beneficios (en tiempo y recursos).
+3. Revisar si hay amenazas en la web objetivo.
+4. Sopesar carga viable y moderar frecuencia de consultas.
+6. Estimar costos y el volumen de scraping necesario para nuestro objetivo
+
+---
+class: inverse, center, middle
+
+# Web Estática
+
+---
+class: justify, middle
+
+**HTTP** 
+- (Hypertext Transfer Protocol) es el nombre de un protocolo de intercambio de datos en la Web. *Clientes* y *servidores* se comunican intercambiando mensajes individuales. 
+
+- Los mensajes que envía el cliente, normalmente un navegador Web, se llaman peticiones (*request*), y los mensajes enviados por el servidor se llaman respuestas (*response*).
+
+---
+
+class: center
+
+# HTTP
+
+![](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview/fetching_a_page.png)&lt;!-- --&gt;
+
+---
+
+**GET** y **POST** son los dos metodos más comunes de peticiones HTTP.
+
+- GET: realiza una solicitud pero no envía datos: no tienen body.
+- POST: realiza una solicitud que implica el envío de datos: tienen body.
+
+Cuando realizamos una solicitud obtenemos un **estatus** de respuesta:
+
+- Respuestas informativas (100–199)
+- Respuestas satisfactorias (200–299)
+- Redirecciones (300–399)
+- Errores de los clientes (400–499)
+- Errores de los servidores (500–599)
+
+---
+
+Una petición HTTP es lo que suele ocurrir cuando tipeamos una **URL**
+
+![](cascada-peticiones.png)
+---
+
+El primer elemento suele ser nuestra primer peticion (comparar con lo siguiente)
+
+![](http-get-status.png)
+
+---
+
+Podemos hacer la misma peticion desde R
+
+
+```r
+GET(url = "https://www.preciosclaros.gob.ar/#!/buscar-productos")
+## Response [https://www.preciosclaros.gob.ar/#!/buscar-productos]
+##   Date: 2023-10-11 18:41
+##   Status: 200
+##   Content-Type: text/html
+##   Size: 270 kB
+## &lt;!DOCTYPE html&gt;
+## &lt;html lang="es" ng-app="sepaApp"&gt;
+## &lt;head&gt;
+##     &lt;meta charset="utf-8"&gt;
+##     &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+##     &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+##     &lt;title&gt;Precios Claros&lt;/title&gt;
+##     &lt;meta name="description" content="Buscá los productos que comprás habitua...
+##     &lt;meta name="author" content="Presidencia de la Nación"&gt;
+## 
+## ...
+```
+
+---
+
+A tener en cuenta de las peticiones HTTP:
+
+- *Metodo*: GET/POST
+
+- *Headers*: información adicional de la solicitud/respuesta
+
+- *Estatus*: codigo de situación de la solicitud
+
+- *Contenido de la respuesta*: en general text/html pero también otros como application/json
+
+---
+
+# HTML y CSS
+
+- **HTML** (HyperText Markup Language por sus siglas en inglés) es un lenguaje descriptivo que especifica la estructura de las páginas web.
+
+
+- **CSS** de las siglas en inglés Cascading Style Sheets es un lenguaje declarativo que controla el aspecto de las páginas web en el navegador.
+
+https://developer.mozilla.org/es/docs/Learn/Getting_started_with_the_web 
+
+---
+
+### **HTML** se usa para anotar contenido y definir la jerarquía del contenido en un documento indicandole al navegador cómo mostrar ('renderizar') este documento en la pantalla.
+
+Podemos pensar un documento HTML como un diagrama de árbol
+
+.center[
+![](https://www.w3schools.com/js/pic_htmltree.gif)
+]
+
+---
+### Comparar el diagrama anterior con:
+
+
+```html
+&lt;html lang="en-US"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;My title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a href="url"&gt;Link&lt;/a&gt;
+    &lt;h1&gt;My header&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+
+---
+
+- Los sitios web además usan **CSS** que permite diseñar la estética del contenido HTML.  **CSS**  opera definiendo propiedades y clases para formatear el contenido.
+
+- Esto facilita sustancialmente la extracción de contenido específico de sitios web grandes y complejos.
+
+
+```html
+  &lt;body&gt;
+    &lt;a href="url"&gt;Link&lt;/a&gt;
+    &lt;h1&gt;Titulo&lt;/h1&gt;
+      &lt;div&gt;&lt;p class="texto importante"&gt;Palabras&lt;/p&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;p&gt;Palabras&lt;/p&gt;&lt;/div&gt;
+    &lt;h2&gt;Segundo Titulo&lt;/h1&gt;
+      &lt;div&gt;&lt;p class="texto importante"&gt;Palabras&lt;/p&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;a href="url" class="texto importante"&gt;Palabras con link&lt;/a&gt;&lt;/div&gt;
+  &lt;/body&gt;
+```
+
+---
+class: middle, center
+## Scripts ejemplo-repositorios-mincyt.R, ejemplo-wikipedia.R
+
+---
+class: inverse, center, middle
+
+# API
+
+---
+
+## API
+
+- A veces es posible ahorrarse bastante trabajo si logramos comunicarnos de forma directa con el backend del sitio: *siempre mirar si está disponible la* **API** *del backend*
+- La API es una interface entre  softwares.
+- Hay de todo tipo pero especialmente hay APIs especializadas en devolver datos en formatos relativamente estructurados (json o xml) a los sitios web.
+
+---
+![](https://umatter.github.io/webmining/img/browser_api.png)
+
+![](https://umatter.github.io/webmining/img/r_api.png)
+
+---
+
+Por ejemplo en la misma página de Precios Claros que vimos antes cuando buscamos productos aparece esto en el tráfico de red del sitio.
+
+![](precios-claros-api-headers.png)
+
+---
+
+![](precios-claros-api-content.png)
+
+---
+
+Podemos aprovechar que la API está expuesta para hacer consultas HTTP de forma directa sin necesidad de que haya intermediación del sitio web. Esto por lo general:
+
+- Es más eficiente <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:green;overflow:visible;position:relative;"><path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+- Es más robusto (las api suelen tener mayor tolerancia a las consultas) <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:green;overflow:visible;position:relative;"><path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+- Es más limpio: los datos vienen formateados <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:green;overflow:visible;position:relative;"><path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+
+---
+class: inverse
+
+# BREAK
+
+---
+class: middle, center
+
+## Script precios-claros.R
+
+---
+
+# Web Dinámica
+
+---
+
+## Tecnologías:
+
+- AJAX: https://en.wikipedia.org/wiki/List_of_Ajax_frameworks 
+
+- Cookies: https://en.wikipedia.org/wiki/HTTP_cookie 
+
+En este tipo de sitios no es el usuario el que dirige explicitamente a qué contenidos accede. Al menos no en un 100%. Además las reglas de la interacción son más complejas y hasta pueden estar encriptadas.
+
+.center[**El contenido de la web no es estático.**]
+
+
+---
+
+```"Las actividades en el lado del cliente se alejan aún más de las intenciones explícitas del usuario y se asemejan más bien a un conjunto de programas que vigilan las acciones del usuario cuando navega por un sitio web, emitiendo varias solicitudes GET y POST sin que el usuario se dé cuenta activamente."``` (https://umatter.github.io/webmining/web-2-0-technologies-the-programmabledynamic-web.html#technological-change-in-the-web)
+
+---
+
+## Diagrama cookies
+
+.center[![](https://umatter.github.io/webmining/img/cookies.png)]
+
+---
+
+```"Las cookies HTTP son pequeños fragmentos de datos que ayudan al servidor a reconocer a un cliente. Las cookies se almacenan localmente en el lado del cliente (por el navegador web) cuando el servidor envía un sitio web con cookies. Durante la interacción posterior con el mismo sitio web, el navegador envía la cookie junto con otras solicitudes al servidor." ```
+(https://umatter.github.io/webmining/advanced-web-scraping-data-extraction-from-dynamic-websites.html#what-if-there-is-no-api)
+
+---
+class: middle, center
+
+## Script ejemplo-cookies.Rmd
+
+---
+
+## Diagrama AJAX
+
+- AJAX es un conjunto de código en el frontend del sitio que va generando el contenido en función de las interacciones del usuario.
+
+.center[&lt;img src="https://umatter.github.io/webmining/img/Ajax-vergleich-en.png" height="400"&gt;]
+
+---
+&lt;br&gt;
+- En algunos casos solo tenemos que entender cómo funcionan las cookies del sitio. Se pueden **incorporar** las **cookies** dentro de las llamadas del **scraper**.
+- En otros casos se vuelve muy complejo lidiar con el AJAX del sitios y se pueden recurrir a una alternativa: emular un comportamiento manual del sitio mediante entornos como **Selenium**.
+
+---
+
+## Selenium con R (Rselenium)
+
+Selenium es un software diseñado para el testeo automatizado de páginas web. Nos permite simular las acciones de una persona en un navegador. Esto permite que por ejemplo las páginas web dinámicas generen el contenido buscado sin necesidad de que haya una persona efectivamente interactuando.
+
+Aunque suele ser menos eficiente computacionalmente que soluciones que interactúan directamente con el AJAX.
+
+---
+class: middle, center
+
+## Script ejemplo-selenium.R
+
+---
+
+## Para seguir explorando
+
+- Crawlers: https://umatter.github.io/webmining/web-mining-programs.html 
+- Consultas asincronicas:https://cran.r-project.org/web/packages/crul/vignettes/async.html 
+
+---
+
+## Referencias:
+- https://umatter.github.io/webmining/
+- https://developer.mozilla.org/es/docs/Learn/HTML
+- https://developer.mozilla.org/es/docs/Learn/CSS
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
