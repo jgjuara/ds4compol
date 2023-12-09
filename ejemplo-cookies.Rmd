@@ -1,0 +1,120 @@
+---
+title: "Ejercicio Scraping con Cookies"
+description: |
+  Ejercicio del Cap 7.2.1 de [Introducción a la minería web para científicos sociales](https://umatter.github.io/webmining) de Ulrich Matter
+author:
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+Vamos siguiendo el script.
+
+```{r}
+########################################
+# Introduction to Web Mining 2017
+# 7: Programmable Web II
+#
+# Book Shopping with R
+# U.Matter, November 2017
+########################################
+
+# PREAMBLE -------
+
+# load packages
+library(rvest)
+library(httr)
+library(tidyverse)
+
+# set fix variables
+SEARCH_URL <- "https://www.biblio.com/search.php?stage=1&result_type=works&keyisbn=argentina"
+CART_URL <- "https://www.biblio.com/cart.php"
+
+# INITIATE SESSION -----
+
+# visit the page (start a session)
+shopping_session <- session(SEARCH_URL)
+
+# have a look at the cookies
+cookies(shopping_session)[, 1:5]
+
+
+
+
+```
+
+
+Al inspeccionar el código fuente de la página web sabemos que los artículos se agregan al carrito de compras mediante un formulario HTML. Así extraemos la parte de los resultados de búsqueda que contienen estos formularios.
+
+```{r}
+knitr::include_graphics("biblio-cart.png")
+```
+
+ Por lo tanto, si queremos agregar un artículo al carrito de compras a través de R, debemos enviar dicho formulario con un número de identificación de libro establecido como bidvalor. Por lo tanto, (a) almacenamos la estructura de estos formularios en un objeto R (a través de html_form()) y (b) extraemos todos los identificadores de libros de los resultados de búsqueda.
+ 
+```{r}
+# look at the html forms to add items to the cart
+form_nodes <- html_nodes(shopping_session, xpath = "//form[@class='add-cart ']")
+# inspect extracted forms
+form_nodes
+```
+
+ 
+ 
+```{r}
+# SUBMIT FORMS ----------
+
+# extract one of the forms
+form <- html_form(form_nodes[[1]])
+# extract the book ids
+bid_nodes <- html_elements(shopping_session, xpath = "//input[@name='bid']/@value")
+bids <- html_text(bid_nodes)
+```
+ 
+La plantilla de formulario y las identificaciones son suficientes para completar el carrito de compras mediante programación. Hacemos esto iterando a través de all bids, estableciendo el bidvalor en el valor respectivo (con set_values) y luego enviando el formulario (a través de submit_form()). Es importante destacar que enviamos estos formularios con la misma sesión, lo que significa submit_form()que nos aseguraremos de que se envíen las cookies relevantes de esta sesión. 21
+ 
+```{r}
+for (i in bids[2]) {
+     form_i <- html_form_set(form, bid = i)
+     names(form_i$fields)[4] <- "" # account for the fact that the form button has no name attribute
+     submit_form(shopping_session, form_i, submit = "")
+}
+```
+ 
+Por último, raspamos el contenido del carrito de la compra. Tenga en cuenta que en lugar de simplemente solicitar la página a la CART_URLque apunta, usamos jump_to()con el ya establecido shopping_session. Esto asegura que la solicitud GET se emita con las cookies de esta sesión. 22
+
+
+
+```{r}
+# open the shopping cart
+cart <- session_jump_to(shopping_session, CART_URL)
+
+```
+
+
+```{r}
+# parse the content
+cart_content <- read_html(cart)
+# extract the book titles in the cart
+books_in_cart <- html_elements(cart_content, xpath = "//h4[@class='title']")
+cat(html_text(books_in_cart))
+```
+
+Es sencillo demostrar que enviar las cookies correctas utilizando jump_to()la misma sesión en la que agregamos los artículos al carrito es realmente crucial. Para demostrar esto, simplemente iniciamos una nueva sesión e intentamos lo mismo que arriba, esta vez accediendo al carrito con la nueva sesión:
+
+```{r}
+# initiate a new session
+new_shopping_session <- html_session(SEARCH_URL)
+# open the shopping cart
+cart <- jump_to(new_shopping_session, CART_URL)
+# parse the content
+cart_content <- read_html(cart)
+# extract the book titles in the cart
+books_in_cart <- html_nodes(cart_content, xpath = "//h4[@class='title']")
+print(html_text(books_in_cart))
+```
+

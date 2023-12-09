@@ -7,10 +7,10 @@ library(httr)
 library(xml2)
 
 # analizar la estructura de la url
-parse_url("https://es.wikipedia.org/wiki/Anexo:Ganadores_del_Premio_Nobel")
+# parse_url("https://es.wikipedia.org/wiki/Anexo:Ganadores_del_Premio_Nobel")
 
 # podemos hacer llamados HTTP GET a la url pero no suele hacerse para scraping de html
-x <- GET("https://es.wikipedia.org/wiki/Anexo:Ganadores_del_Premio_Nobel")
+# x <- GET("https://es.wikipedia.org/wiki/Anexo:Ganadores_del_Premio_Nobel")
 
 # directamente usamos read_html sobre la url
 # conviene guardar la respuesta para no reiterarla cada vez que vemos un elemento
